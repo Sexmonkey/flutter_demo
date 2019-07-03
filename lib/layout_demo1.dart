@@ -29,10 +29,8 @@ class MyApp extends StatelessWidget {
               ],
             ),
           ),
-          new Icon(Icons.star, color: Colors.red),
-          new Text(
-            "22",
-          ),
+
+          new FavoriteWidget(),
         ],
       ),
     );
@@ -72,6 +70,7 @@ class MyApp extends StatelessWidget {
     );
 
     final textSection = new Container(
+      margin: const EdgeInsets.only(top: 30),
       padding: const EdgeInsets.all(32.0),
       child: new Text(
         """
@@ -82,7 +81,7 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp(
-        title: "layout demo",
+//        title: "layout demo",
         home: new Scaffold(
           appBar: AppBar(
             title: Text("layout demo"),
@@ -102,4 +101,70 @@ class MyApp extends StatelessWidget {
           ),
         ));
   }
+}
+
+class FavoriteWidget extends StatefulWidget{
+
+  @override
+  State<StatefulWidget> createState() {
+    return new _FavoritedWidgetState();
+  }
+
+}
+
+class _FavoritedWidgetState extends State<FavoriteWidget>{
+
+
+  bool _isFavorited = true;
+
+  int _favoritedCount = 22;
+
+  void _clickFavorite(){
+
+    setState(() {
+      if(_isFavorited){
+        _isFavorited = false;
+        _favoritedCount -= 1;
+      }else{
+        _isFavorited = true;
+        _favoritedCount += 1 ;
+      }
+    });
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return new Row(
+
+      mainAxisSize: MainAxisSize.min,
+
+      children: [
+        new Container(
+
+          padding: const EdgeInsets.all(0.0),
+          child: IconButton(
+              icon: (_isFavorited ? new Icon(Icons.star) : new Icon(Icons.star_border)),
+              color: Colors.red,
+              onPressed: _clickFavorite,
+          ),
+
+        ),
+
+        new SizedBox(
+          width: 18.0,
+          child:new Container(
+
+            child: new Text("$_favoritedCount"),
+
+          ),
+
+        )
+
+      ],
+    );
+  }
+
+
 }
